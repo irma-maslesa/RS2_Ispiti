@@ -1,0 +1,18 @@
+[
+  {
+    "vrstaId": 1,
+    "naziv": "PC"
+  },
+  {
+    "vrstaId": 2,
+    "naziv": "Laptop"
+  },
+  {
+    "vrstaId": 3,
+    "naziv": "Monitor"
+  },
+  {
+    "vrstaId": 4,
+    "naziv": "Tastatura"
+  }
+]

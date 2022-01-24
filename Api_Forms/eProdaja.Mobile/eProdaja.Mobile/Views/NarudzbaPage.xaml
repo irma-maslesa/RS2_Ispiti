@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewModels="clr-namespace:eProdaja.Mobile.ViewModels"
+             mc:Ignorable="d"
+             x:Class="eProdaja.Mobile.Views.NarudzbaPage">
+    <ContentPage.BindingContext>
+        <viewModels:NarudzbaViewModel></viewModels:NarudzbaViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Narudzba"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding ProizvodiList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Proizvod.Naziv}"></Label>
+                                <Label Text="{Binding Proizvod.Sifra}"></Label>
+                                <Label Text="{Binding Proizvod.Cijena, StringFormat='Cijena: {0:C}'}"></Label>
+                                <StackLayout Orientation="Horizontal">
+                                    <Entry Text="{Binding Kolicina}" Keyboard="Numeric"></Entry>
+                                    <Button Text="+1" Command="{Binding PovecajKolicinuCommand}"></Button>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
