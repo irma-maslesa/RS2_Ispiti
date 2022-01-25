@@ -62,6 +62,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAddCPasos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddCPasos.Designer.cs">
+      <DependentUpon>frmAddCPasos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCovidPasos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCovidPasos.Designer.cs">
+      <DependentUpon>frmCovidPasos.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +113,12 @@
       <DependentUpon>frmProizvodi.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAddCPasos.resx">
+      <DependentUpon>frmAddCPasos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCovidPasos.resx">
+      <DependentUpon>frmCovidPasos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmKorisnici.resx">
       <DependentUpon>frmKorisnici.cs</DependentUpon>
     </EmbeddedResource>

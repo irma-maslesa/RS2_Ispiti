@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:vjezbe2_app/models/Proizvodi.dart';
+import 'package:vjezbe2_app/pages/CovidPasos.dart';
 import 'dart:convert';
 import 'package:vjezbe2_app/pages/Login.dart';
 import 'package:vjezbe2_app/pages/Loading.dart';
@@ -18,15 +19,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:Login(),
+      home: CovidPasos(),
       routes: {
-        '/loading':(context)=>Loading(),
-        '/home':(context)=>Home(),
-        '/products':(context)=>Products(),
-        '/productdetails':(context)=>ProductDetails(),
-        '/orders':(context)=>Orders()
+        '/loading': (context) => Loading(),
+        '/home': (context) => Home(),
+        '/products': (context) => Products(),
+        '/productdetails': (context) => ProductDetails(),
+        '/orders': (context) => Orders()
       },
     );
   }
 }
-

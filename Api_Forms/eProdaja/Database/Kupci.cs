@@ -9,6 +9,7 @@ namespace eProdaja.Database
     {
         public Kupci()
         {
+            CovidPasosis = new HashSet<CovidPasosi>();
             Narudzbes = new HashSet<Narudzbe>();
             Ocjenes = new HashSet<Ocjene>();
         }
@@ -23,6 +24,7 @@ namespace eProdaja.Database
         public string LozinkaSalt { get; set; }
         public bool Status { get; set; }
 
+        public virtual ICollection<CovidPasosi> CovidPasosis { get; set; }
         public virtual ICollection<Narudzbe> Narudzbes { get; set; }
         public virtual ICollection<Ocjene> Ocjenes { get; set; }
     }

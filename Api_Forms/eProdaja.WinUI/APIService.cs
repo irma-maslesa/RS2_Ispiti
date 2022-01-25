@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using eProdaja.Model;
+using eProdaja.Model.Requests;
 using eProdaja.WinUI.Properties;
 using Flurl.Http;
 
@@ -34,6 +35,39 @@ namespace eProdaja.WinUI
                .WithBasicAuth(Username, Password).GetJsonAsync<T>();
 
             return list;
+        }
+
+        public async Task<IEnumerable<CovidPasos>> Get() {
+            return await $"{endpoint}{_resource}"
+               .GetJsonAsync<IEnumerable<CovidPasos>>();
+        }
+        public async Task<IEnumerable<NarudzbaPasos>> GetNarudzbe(CovidPasosSearchRequest search) {
+            return await $"{endpoint}{_resource}/narduzbe?{search.ToQueryString()}"
+               .GetJsonAsync<IEnumerable<NarudzbaPasos>>();
+        }
+        public async Task<IEnumerable<LoV>> GetKupce() {
+            return await $"{endpoint}{_resource}/kupci"
+               .GetJsonAsync<IEnumerable<LoV>>();
+        }
+
+        public async Task<CovidPasos> InsertPasos (CovidPasosInsertRequest request) {
+            var url = $"{endpoint}{_resource}";
+
+            try {
+                return await url.PostJsonAsync(request).ReceiveJson<CovidPasos>();
+            }
+            catch (FlurlHttpException ex) {
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors) {
+                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
+                }
+
+                MessageBox.Show(stringBuilder.ToString(), "Greška", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return default(CovidPasos);
+            }
+
         }
 
         public async Task<T> GetById<T>(object id)
