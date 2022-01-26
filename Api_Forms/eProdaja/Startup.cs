@@ -69,6 +69,7 @@ namespace eProdaja
             services.AddScoped<IJediniceMjereService, JedinicaMjereService>();
             services.AddScoped<IVrsteProizvodumService, VrsteProizvodumService>();
             services.AddScoped<IProizvodiService, ProizvodiService>();
+            services.AddScoped<IPretragaIspitService, PretragaIspitService>();
             services.AddScoped<IReadService<Model.Uloge, object>, BaseReadService <Model.Uloge, Database.Uloge, object>>();
 
             services.AddAuthentication("BasicAuthentication")

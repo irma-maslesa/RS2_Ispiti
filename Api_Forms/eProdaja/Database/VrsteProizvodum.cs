@@ -9,12 +9,14 @@ namespace eProdaja.Database
     {
         public VrsteProizvodum()
         {
+            PretragaIspits = new HashSet<PretragaIspit>();
             Proizvodis = new HashSet<Proizvodi>();
         }
 
         public int VrstaId { get; set; }
         public string Naziv { get; set; }
 
+        public virtual ICollection<PretragaIspit> PretragaIspits { get; set; }
         public virtual ICollection<Proizvodi> Proizvodis { get; set; }
     }
 }
