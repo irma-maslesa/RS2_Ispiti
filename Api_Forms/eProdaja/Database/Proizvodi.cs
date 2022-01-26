@@ -12,6 +12,7 @@ namespace eProdaja.Database
             IzlazStavkes = new HashSet<IzlazStavke>();
             NarudzbaStavkes = new HashSet<NarudzbaStavke>();
             Ocjenes = new HashSet<Ocjene>();
+            ProizvodKomentaris = new HashSet<ProizvodKomentari>();
             UlazStavkes = new HashSet<UlazStavke>();
         }
 
@@ -30,6 +31,7 @@ namespace eProdaja.Database
         public virtual ICollection<IzlazStavke> IzlazStavkes { get; set; }
         public virtual ICollection<NarudzbaStavke> NarudzbaStavkes { get; set; }
         public virtual ICollection<Ocjene> Ocjenes { get; set; }
+        public virtual ICollection<ProizvodKomentari> ProizvodKomentaris { get; set; }
         public virtual ICollection<UlazStavke> UlazStavkes { get; set; }
     }
 }

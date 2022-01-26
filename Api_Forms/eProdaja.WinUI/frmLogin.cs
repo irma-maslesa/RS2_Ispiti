@@ -14,25 +14,23 @@ namespace eProdaja.WinUI
     public partial class frmLogin : Form
     {
         private readonly APIService _api = new APIService("Korisnici");
-        public frmLogin()
-        {
+        public frmLogin() {
             InitializeComponent();
         }
 
-        private async void btnLogin_Click(object sender, EventArgs e)
-        {
+        private async void btnLogin_Click(object sender, EventArgs e) {
             APIService.Username = txtUsername.Text;
             APIService.Password = txtPassword.Text;
 
-            try
-            {
+            try {
                 var result = await _api.GetAll<List<Korisnici>>();
+
+                APIService.Id = result.FirstOrDefault(o => o.KorisnickoIme == APIService.Username).KorisnikId;
 
                 MDIParent1 frm = new MDIParent1();
                 frm.Show();
             }
-            catch
-            {
+            catch {
                 MessageBox.Show("Pogrešan username ili password");
             }
         }

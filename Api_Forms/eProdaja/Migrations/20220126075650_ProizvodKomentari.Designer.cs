@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eProdaja.Database;
 
 namespace eProdaja.Migrations
 {
     [DbContext(typeof(eProdajaContext))]
-    partial class eProdajaContextModelSnapshot : ModelSnapshot
+    [Migration("20220126075650_ProizvodKomentari")]
+    partial class ProizvodKomentari
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

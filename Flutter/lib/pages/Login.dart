@@ -76,7 +76,7 @@ class _LoginState extends State<Login> {
                     await GetData();
                     if (result != null) {
                       print(result);
-                      Navigator.of(context).pushReplacementNamed('/home');
+                      Navigator.of(context).pushReplacementNamed('/komentari');
                     }
                   },
                   child: Text(

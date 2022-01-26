@@ -1,7 +1,7 @@
 version: '3'
 services:
 #mssql docker
-  eprodaja-sql:
+  eprodaja-sql-ib180101:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     restart: unless-stopped
     environment:
@@ -13,20 +13,20 @@ services:
     networks:
       - eprodajanet
 
-  eprodaja-api:
+  eprodaja-api-ib180101:
     restart: unless-stopped
     build:
       context: .
     environment:
-      - ConnectionStrings:DefaultConnection=Server=eprodaja-sql,1433;Database=eProdajaVjezbe;User=sa;Password=QWElkj132!;ConnectRetryCount=0
+      - ConnectionStrings:DefaultConnection=Server=eprodaja-sql-ib180101,1433;Database=eProdajaVjezbeIB180101;User=sa;Password=QWElkj132!;ConnectRetryCount=0
     ports:
       - 5010:5010
     networks:
       - eprodajanet      
     links:
-      - eprodaja-sql
+      - eprodaja-sql-ib180101
     depends_on:
-      - eprodaja-sql
+      - eprodaja-sql-ib180101
       
 networks:
   eprodajanet:

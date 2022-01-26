@@ -27,22 +27,13 @@ namespace eProdaja.Database
         public virtual DbSet<NarudzbaStavke> NarudzbaStavkes { get; set; }
         public virtual DbSet<Narudzbe> Narudzbes { get; set; }
         public virtual DbSet<Ocjene> Ocjenes { get; set; }
+        public virtual DbSet<ProizvodKomentari> ProizvodKomentaris { get; set; }
         public virtual DbSet<Proizvodi> Proizvodis { get; set; }
         public virtual DbSet<Skladistum> Skladista { get; set; }
         public virtual DbSet<UlazStavke> UlazStavkes { get; set; }
         public virtual DbSet<Ulazi> Ulazis { get; set; }
         public virtual DbSet<Uloge> Uloges { get; set; }
         public virtual DbSet<VrsteProizvodum> VrsteProizvoda { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source =.; Initial Catalog = eProdaja; Integrated Security = true");
-                // "Data Source=localhost, 1434;Initial Catalog=eProdaja; user=sa; Password=QWEasd123!");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -89,6 +80,10 @@ namespace eProdaja.Database
 
                 entity.ToTable("IzlazStavke");
 
+                entity.HasIndex(e => e.IzlazId, "IX_IzlazStavke_IzlazID");
+
+                entity.HasIndex(e => e.ProizvodId, "IX_IzlazStavke_ProizvodID");
+
                 entity.Property(e => e.IzlazStavkaId).HasColumnName("IzlazStavkaID");
 
                 entity.Property(e => e.Cijena).HasColumnType("decimal(18, 2)");
@@ -117,6 +112,12 @@ namespace eProdaja.Database
                 entity.HasKey(e => e.IzlazId);
 
                 entity.ToTable("Izlazi");
+
+                entity.HasIndex(e => e.KorisnikId, "IX_Izlazi_KorisnikID");
+
+                entity.HasIndex(e => e.NarudzbaId, "IX_Izlazi_NarudzbaID");
+
+                entity.HasIndex(e => e.SkladisteId, "IX_Izlazi_SkladisteID");
 
                 entity.Property(e => e.IzlazId).HasColumnName("IzlazID");
 
@@ -178,7 +179,8 @@ namespace eProdaja.Database
                 entity.ToTable("Korisnici");
 
                 entity.HasIndex(e => e.Email, "CS_Email")
-                    .IsUnique();
+                    .IsUnique()
+                    .HasFilter("([Email] IS NOT NULL)");
 
                 entity.HasIndex(e => e.KorisnickoIme, "CS_KorisnickoIme")
                     .IsUnique();
@@ -219,6 +221,10 @@ namespace eProdaja.Database
                 entity.HasKey(e => e.KorisnikUlogaId);
 
                 entity.ToTable("KorisniciUloge");
+
+                entity.HasIndex(e => e.KorisnikId, "IX_KorisniciUloge_KorisnikID");
+
+                entity.HasIndex(e => e.UlogaId, "IX_KorisniciUloge_UlogaID");
 
                 entity.Property(e => e.KorisnikUlogaId).HasColumnName("KorisnikUlogaID");
 
@@ -282,6 +288,10 @@ namespace eProdaja.Database
 
                 entity.ToTable("NarudzbaStavke");
 
+                entity.HasIndex(e => e.NarudzbaId, "IX_NarudzbaStavke_NarudzbaID");
+
+                entity.HasIndex(e => e.ProizvodId, "IX_NarudzbaStavke_ProizvodID");
+
                 entity.Property(e => e.NarudzbaStavkaId).HasColumnName("NarudzbaStavkaID");
 
                 entity.Property(e => e.NarudzbaId).HasColumnName("NarudzbaID");
@@ -307,6 +317,8 @@ namespace eProdaja.Database
 
                 entity.ToTable("Narudzbe");
 
+                entity.HasIndex(e => e.KupacId, "IX_Narudzbe_KupacID");
+
                 entity.Property(e => e.NarudzbaId).HasColumnName("NarudzbaID");
 
                 entity.Property(e => e.BrojNarudzbe)
@@ -330,6 +342,10 @@ namespace eProdaja.Database
 
                 entity.ToTable("Ocjene");
 
+                entity.HasIndex(e => e.KupacId, "IX_Ocjene_KupacID");
+
+                entity.HasIndex(e => e.ProizvodId, "IX_Ocjene_ProizvodID");
+
                 entity.Property(e => e.OcjenaId).HasColumnName("OcjenaID");
 
                 entity.Property(e => e.Datum).HasColumnType("datetime");
@@ -351,11 +367,44 @@ namespace eProdaja.Database
                     .HasConstraintName("FK_Ocjene_Proizvodi");
             });
 
+            modelBuilder.Entity<ProizvodKomentari>(entity =>
+            {
+                entity.HasKey(e => e.ProizvodKomentarId);
+
+                entity.ToTable("ProizvodKomentari");
+
+                entity.Property(e => e.ProizvodKomentarId).HasColumnName("ProizvodKomentarID");
+
+                entity.Property(e => e.Komentar)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.KupacId).HasColumnName("KupacID");
+
+                entity.Property(e => e.ProizvodId).HasColumnName("ProizvodID");
+
+                entity.HasOne(d => d.Kupac)
+                    .WithMany(p => p.ProizvodKomentaris)
+                    .HasForeignKey(d => d.KupacId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProizvodKomentari_Kupci");
+
+                entity.HasOne(d => d.Proizvod)
+                    .WithMany(p => p.ProizvodKomentaris)
+                    .HasForeignKey(d => d.ProizvodId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ProizvodKomentari_Proizvodi");
+            });
+
             modelBuilder.Entity<Proizvodi>(entity =>
             {
                 entity.HasKey(e => e.ProizvodId);
 
                 entity.ToTable("Proizvodi");
+
+                entity.HasIndex(e => e.JedinicaMjereId, "IX_Proizvodi_JedinicaMjereID");
+
+                entity.HasIndex(e => e.VrstaId, "IX_Proizvodi_VrstaID");
 
                 entity.Property(e => e.ProizvodId).HasColumnName("ProizvodID");
 
@@ -411,6 +460,10 @@ namespace eProdaja.Database
 
                 entity.ToTable("UlazStavke");
 
+                entity.HasIndex(e => e.ProizvodId, "IX_UlazStavke_ProizvodID");
+
+                entity.HasIndex(e => e.UlazId, "IX_UlazStavke_UlazID");
+
                 entity.Property(e => e.UlazStavkaId).HasColumnName("UlazStavkaID");
 
                 entity.Property(e => e.Cijena).HasColumnType("decimal(18, 2)");
@@ -437,6 +490,12 @@ namespace eProdaja.Database
                 entity.HasKey(e => e.UlazId);
 
                 entity.ToTable("Ulazi");
+
+                entity.HasIndex(e => e.DobavljacId, "IX_Ulazi_DobavljacID");
+
+                entity.HasIndex(e => e.KorisnikId, "IX_Ulazi_KorisnikID");
+
+                entity.HasIndex(e => e.SkladisteId, "IX_Ulazi_SkladisteID");
 
                 entity.Property(e => e.UlazId).HasColumnName("UlazID");
 
@@ -504,8 +563,6 @@ namespace eProdaja.Database
                     .IsRequired()
                     .HasMaxLength(50);
             });
-
-            modelBuilder.Entity<VrsteProizvodum>().HasData(new VrsteProizvodum { VrstaId = 20, Naziv = "Prehrambeni"});
 
             OnModelCreatingPartial(modelBuilder);
         }

@@ -121,5 +121,12 @@ namespace eProdaja.WinUI
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
         }
+
+        private void komentariToolStripMenuItem_Click(object sender, EventArgs e) {
+            frmProizvodKomentar frm = new frmProizvodKomentar();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace eProdaja.Database
         {
             Narudzbes = new HashSet<Narudzbe>();
             Ocjenes = new HashSet<Ocjene>();
+            ProizvodKomentaris = new HashSet<ProizvodKomentari>();
         }
 
         public int KupacId { get; set; }
@@ -25,5 +26,6 @@ namespace eProdaja.Database
 
         public virtual ICollection<Narudzbe> Narudzbes { get; set; }
         public virtual ICollection<Ocjene> Ocjenes { get; set; }
+        public virtual ICollection<ProizvodKomentari> ProizvodKomentaris { get; set; }
     }
 }

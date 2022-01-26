@@ -62,11 +62,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmDodajKomentar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDodajKomentar.Designer.cs">
+      <DependentUpon>frmDodajKomentar.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmProizvodKomentar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmProizvodKomentar.Designer.cs">
+      <DependentUpon>frmProizvodKomentar.cs</DependentUpon>
     </Compile>
     <Compile Include="MDIParent1.cs">
       <SubType>Form</SubType>
@@ -101,6 +113,9 @@
       <DependentUpon>frmProizvodi.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmDodajKomentar.resx">
+      <DependentUpon>frmDodajKomentar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmKorisnici.resx">
       <DependentUpon>frmKorisnici.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmProizvodKomentar.resx">
+      <DependentUpon>frmProizvodKomentar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MDIParent1.resx">
       <DependentUpon>MDIParent1.cs</DependentUpon>

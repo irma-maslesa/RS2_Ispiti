@@ -15,6 +15,7 @@ namespace eProdaja.WinUI
         private string _resource;
         public string endpoint = $"{Resources.ApiUrl}";
 
+        public static int Id { get; set; }
         public static string Username { get; set; }
         public static string Password { get; set; }
 
